@@ -44,7 +44,7 @@
 									//alert( post.title );
 									$( '#quote-title' ).text( post.title );
 									$( '#quote-content' ).html( post.content );
-									
+									$( '#mp3URL a' ).attr( "href", post.myextradata.mp3URL ).text( post.myextradata.mp3URL );
 									// If the Source is available, use it. Otherwise hide it.
 									if ( typeof post.custom_meta !== 'undefined' && typeof post.custom_meta.Source !== 'undefined' ) {
 									  $( '#quote-source' ).html( 'Source:' + post.custom_meta.Source );
@@ -57,14 +57,14 @@
 					} );
 			} );
 			function myFunction() {
-			    $("#quote-title").attr("style", "color:red").html("Bite me big boy!")
+			    $("#quote-title").attr("style", "color:red").html("Press the button below!")
 			}
 			$(document).ready(myFunction);
 		</script>
     </head>
     <body>
         <div class="app">
-            <h1>PhoneGap06</h1>
+            <h1>PhoneGap10</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
@@ -73,7 +73,8 @@
 	            <p>
 	                <div id="quote-title">title</div>
 	                <div id="quote-content">content</div>
-	                <button id="get-another-quote-button">Get Another Quote</button>
+	                <div id="mp3URL"><a href="">mp3URL</a></div>
+	                <button id="get-another-quote-button">Get Another Song</button>
 	                
 					
 				</p>
