@@ -27,20 +27,65 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel='https://github.com/WP-API/WP-API' href='http://music.cryns.dev/wp-json/' />
         <title>Hello World</title>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+	        jQuery( function( $ ) {
+		    	// via https://css-tricks.com/using-the-wp-api-to-fetch-posts/
+					$( '#get-another-quote-button' ).on( 'click', function ( e ) {
+					//alert('button clicked');
+						e.preventDefault();
+							$.ajax( {
+								url: 'http://music.cryns.com/wp-json/posts?type=cryns_audio_file&filter[orderby]=rand&filter[posts_per_page]=10',
+								success: function ( data ) {
+									alert('data loaded');
+									var post = data.shift(); // The data is an array of posts. Grab the first one.
+									alert( post.title );
+									$( '#quote-title' ).text( post.title );
+									$( '#quote-content' ).html( post.content );
+									
+									// If the Source is available, use it. Otherwise hide it.
+									if ( typeof post.custom_meta !== 'undefined' && typeof post.custom_meta.Source !== 'undefined' ) {
+									  $( '#quote-source' ).html( 'Source:' + post.custom_meta.Source );
+									} else {
+									  $( '#quote-source' ).text( '' );
+									}
+								},
+								cache: false
+						} );
+					} );
+			} );
+			function myFunction() {
+			    $("#quote-title").attr("style", "color:red").html("Bite me big boy!")
+			}
+			$(document).ready(myFunction);
+		</script>
     </head>
     <body>
         <div class="app">
-            <h1>PhoneGap</h1>
+            <h1>PhoneGap06</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
+            <div>
+	            <p>
+	                <div id="quote-title">title</div>
+	                <div id="quote-content">content</div>
+	                <button id="get-another-quote-button">Get Another Quote</button>
+	                
+					
+				</p>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        
         <script type="text/javascript">
             app.initialize();
         </script>
+        
+        
     </body>
 </html>
