@@ -42,7 +42,7 @@
 								//alert('data loaded');
 								var post = data.shift(); // The data is an array of posts. Grab the first one.
 								//alert( post.title );
-								$( '#quote-title' ).text( post.title );
+								$( '#quote-title' ).html( post.title );
 								$( '#quote-content' ).html( post.content );
 								$( '#mp3URL a' ).attr( "href", post.myextradata.mp3URL ).text( post.myextradata.mp3URL );
 								
@@ -82,7 +82,7 @@
         </div>
         <div class="app">
 	        <img src="img/toby.jpg" style="max-width:200px;height:auto;" />
-            <h1>Cryns Family Music Archives</h1>
+            <h1>Cryns Family Music Archives1</h1>
             
             <div>
 	            <p>
