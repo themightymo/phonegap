@@ -33,28 +33,41 @@
 		<script type="text/javascript">
 	        jQuery( function( $ ) {
 		    	// via https://css-tricks.com/using-the-wp-api-to-fetch-posts/
-					$( '#get-another-quote-button' ).on( 'click', function ( e ) {
-					//alert('button clicked');
-						e.preventDefault();
-							$.ajax( {
-								url: 'http://music.cryns.com/wp-json/posts?type=cryns_audio_file&filter[orderby]=rand&filter[posts_per_page]=10',
-								success: function ( data ) {
-									//alert('data loaded');
-									var post = data.shift(); // The data is an array of posts. Grab the first one.
-									//alert( post.title );
-									$( '#quote-title' ).text( post.title );
-									$( '#quote-content' ).html( post.content );
-									$( '#mp3URL a' ).attr( "href", post.myextradata.mp3URL ).text( post.myextradata.mp3URL );
-									// If the Source is available, use it. Otherwise hide it.
-									if ( typeof post.custom_meta !== 'undefined' && typeof post.custom_meta.Source !== 'undefined' ) {
-									  $( '#quote-source' ).html( 'Source:' + post.custom_meta.Source );
-									} else {
-									  $( '#quote-source' ).text( '' );
-									}
-								},
-								cache: false
-						} );
+				$( '#get-another-quote-button' ).on( 'click', function ( e ) {
+				//alert('button clicked');
+					e.preventDefault();
+						$.ajax( {
+							url: 'http://music.cryns.com/wp-json/posts?type=cryns_audio_file&filter[orderby]=rand&filter[posts_per_page]=10',
+							success: function ( data ) {
+								//alert('data loaded');
+								var post = data.shift(); // The data is an array of posts. Grab the first one.
+								//alert( post.title );
+								$( '#quote-title' ).text( post.title );
+								$( '#quote-content' ).html( post.content );
+								$( '#mp3URL a' ).attr( "href", post.myextradata.mp3URL ).text( post.myextradata.mp3URL );
+								
+								// via http://stackoverflow.com/questions/9421505/switch-audio-source-with-jquery-and-html5-audio-tag
+								var audio = $("#player");      
+							    $("#mp3_src").attr("src", post.myextradata.mp3URL);
+							    /****************/
+							    audio[0].pause();
+							    audio[0].load();//suspends and restores all audio element
+							    audio[0].play();
+							    /****************/
+							    
+							    
+								$( '#mp3Player' ).attr( "src", post.myextradata.mp3URL );
+								//$(this).attr("src", urlAbsolute)
+								// If the Source is available, use it. Otherwise hide it.
+								if ( typeof post.custom_meta !== 'undefined' && typeof post.custom_meta.Source !== 'undefined' ) {
+								  $( '#quote-source' ).html( 'Source:' + post.custom_meta.Source );
+								} else {
+								  $( '#quote-source' ).text( '' );
+								}
+							},
+							cache: false
 					} );
+				} );
 			} );
 			function myFunction() {
 			    $("#quote-title").attr("style", "color:red").html("Press the button below!")
@@ -68,14 +81,19 @@
             <p class="event received">Device is Ready</p>
         </div>
         <div class="app">
+	        <img src="img/toby.jpg" style="max-width:200px;height:auto;" />
             <h1>Cryns Family Music Archives</h1>
             
             <div>
 	            <p>
 	                <div id="quote-title">title</div>
 	                <div id="quote-content">content</div>
-	                <div id="mp3URL"><a href="">mp3URL</a></div>
-	                <button id="get-another-quote-button">Get Another Song</button>
+	                <!-- <div id="mp3URL"><a href="">mp3URL</a></div> -->
+	                <audio id="player" controls style="max-width:100%;">
+						<source id="mp3_src" src="test.mp3" type="audio/mpeg">
+						Your browser does not support the audio element.
+					</audio>
+	                <button id="get-another-quote-button" style="margin:1em;">Get Another Song</button>
 	                
 					
 				</p>
