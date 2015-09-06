@@ -42,23 +42,6 @@
 				
 				$("#randomSongGenerator #quote-title").attr("style", "color:red").html("Press the button below!");
 				
-				/*$.getJSON('http://music.cryns.com/wp-json/taxonomies/cryns_artist/terms?number=1')
-			        .success(function(response) {
-				        console.log(response);
-			            var $content = $('#test-content')
-			                .html(response[0].taxonomy);
-			
-			            $content.find('img').each(function() {
-			                var $this = $(this);
-			                $this.height($this.height() / 2);
-			                $this.width($this.width() / 2);
-			            });
-			
-			            $('#test-title')
-			                .html(response[0].name)
-			                .attr('href', response[0].link);
-			        });*/
-			    
 				// List All Artists
 				$( '#randomSongGenerator #quote-content' ).css({"backgroundColor": "green", "color": "white"});
 				
@@ -67,34 +50,30 @@
 				
 				
 				
-				$.fn.myfunction = function () {
-				    $(this).on('click', function(e){
-				        e.preventDefault();
-				        var page_url=$(this).prop('href');
-				        $('#test-content').load(page_url);
-				    });
-				};
+				$(document).on('click', 'a.tax-link', function(e){
+				    e.preventDefault();
+				    $("#randomSongGenerator").load($(this).attr("href"));
+				    console.log('CLICKED!');
+				});
 				
-				$('a').myfunction();
-				
-				
-				
-				
-				
-
 				$.ajax( {
-					url: 'http://music.cryns.com/wp-json/taxonomies/cryns_artist/terms/?_jsonp=?',
-					type: "GET",
-					dataType: 'jsonp',
+					url: 'http://music.cryns.com/wp-json/taxonomies/cryns_artist/terms',
 					success: function ( data ) {
-						console.log(JSON.stringify(response));
 						var post = data;
 						var text = "";
 						var i;
+						
+						$('a').click(function(event) {
+						   event.preventDefault();
+						});
+						 
 						for (i = 0; i < data.length; i++) {
 						    text += '<a href="' + data[i].link + '" class="tax-link link' + i + '">' + data[i].name + '</a><br>'; 
 						}
+						
+						
 						document.getElementById("demo").innerHTML = text;
+						console.log(data);
 					},
 					error:function(){
 						alert("Error");
@@ -157,10 +136,6 @@
     <body>
 	    <div id="test-title"></div>
 	    <div id="test-content"></div>
-	    <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-        </div>
         <div class="app">
 	        <!-- via http://www.hipsterlogogenerator.com/ -->
 	        <img src="img/logo.png" style="max-width:200px;height:auto;" />
@@ -168,7 +143,7 @@
             
             
             <div id="demo"></div>
-			<div id="wait" class="blink"><h1>LOADING!!!</h1></div>
+			<div id="wait" class="blink"><h1>LOADING-abc</h1></div>
             <div id="mainContent"></div>
             
             

@@ -50,6 +50,11 @@
 				
 				
 				
+				$(document).on('click', 'a.tax-link', function(e){
+				    e.preventDefault();
+				    $("#randomSongGenerator").load($(this).attr("href"));
+				    console.log('CLICKED!');
+				});
 				
 				$.ajax( {
 					url: 'http://music.cryns.com/wp-json/taxonomies/cryns_artist/terms',
@@ -138,7 +143,7 @@
             
             
             <div id="demo"></div>
-			<div id="wait" class="blink"><h1>LOADING-123</h1></div>
+			<div id="wait" class="blink"><h1>LOADING-abc</h1></div>
             <div id="mainContent"></div>
             
             
