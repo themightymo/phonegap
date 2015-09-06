@@ -33,36 +33,45 @@
 		<script type="text/javascript">
 			//jQuery.noConflict();
 			
+			    
+			
+			
 			jQuery( document ).ready(function( $ ) {
 				
 				
 				
-			    
+				$("#randomSongGenerator #quote-title").attr("style", "color:red").html("Press the button below!");
+				
 				// List All Artists
 				$( '#randomSongGenerator #quote-content' ).css({"backgroundColor": "green", "color": "white"});
-				//e.preventDefault();
+				
+				
+				
+				
+				
+				
+				
 				$.ajax( {
 					url: 'http://music.cryns.com/wp-json/taxonomies/cryns_artist/terms',
 					success: function ( data ) {
-						
 						var post = data;
 						var text = "";
 						var i;
+						
+						$('a').click(function(event) {
+						   event.preventDefault();
+						});
+						 
 						for (i = 0; i < data.length; i++) {
-						    text += '<a href="#" class="link1">' + data[i].name + '</a><br>';
-						    $("a.link1").click(function(e) {
-							    
-							    /*$("#mainContent").html('<img src="http://192.168.0.32:3000/img/logo.png" id="loading_image"/>');
-								var url = $(this).attr("href") + " #mainContent";
-						        $('#mainContent').load(url);*/
-						        alert('link clicked');
-						        e.preventDefault();
-						    });
-						    
+						    text += '<a href="' + data[i].link + '" class="tax-link link' + i + '">' + data[i].name + '</a><br>'; 
 						}
+						
+						
 						document.getElementById("demo").innerHTML = text;
-						
-						
+						console.log(data);
+					},
+					error:function(){
+						alert("Error");
 					},
 					cache: false
 				} );
@@ -76,12 +85,7 @@
 				} ).ajaxStop ( function(){
 					$(this).hide(); // hide loading div
 				});
-					
-			} );
-			
-			
-			// Random Song Generator
-	        jQuery( function( $ ) {
+				// Random Song Generator
 		    	// via https://css-tricks.com/using-the-wp-api-to-fetch-posts/
 				$( '#randomSongGenerator #get-another-song-button' ).on( 'click', function ( e ) {
 					//alert('button clicked');
@@ -115,20 +119,18 @@
 							},
 							cache: false
 					} );
-				} );
+				} );		
 			} );
-			function myFunction() {
-			    $("#randomSongGenerator #quote-title").attr("style", "color:red").html("Press the button below!");
-			    
-			}
-			$(document).ready(myFunction);
+			
+			
+			
+			
+			
 		</script>
     </head>
     <body>
-	    <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-        </div>
+	    <div id="test-title"></div>
+	    <div id="test-content"></div>
         <div class="app">
 	        <!-- via http://www.hipsterlogogenerator.com/ -->
 	        <img src="img/logo.png" style="max-width:200px;height:auto;" />
@@ -136,7 +138,7 @@
             
             
             <div id="demo"></div>
-			<div id="wait" class="blink"><h1>LOADING!!!</h1></div>
+			<div id="wait" class="blink"><h1>LOADING-123</h1></div>
             <div id="mainContent"></div>
             
             
@@ -154,7 +156,12 @@
 				</p>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript">
+		    if (!navigator.userAgent.toLowerCase().match('chrome')) {
+		        document.write("<script src='phonegap.js'><\/script>");
+		    }
+		</script>
+       
         <script type="text/javascript" src="js/index.js"></script>
         
         <script type="text/javascript">
